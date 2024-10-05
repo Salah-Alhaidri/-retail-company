@@ -34,7 +34,8 @@ GROUP BY c.customer_id, customer_name ORDER BY total_orders DESC;
   SELECT DATE_FORMAT(order_date, '%Y-%m') AS month,SUM(total_amount) AS monthly_sales
 FROM orders WHERE YEAR(order_date) = YEAR(CURDATE()) GROUP BY month ORDER BY month;
 </h3>
-![fjdsfjdsf](https://github.com/user-attachments/assets/0b6bfdf7-6e91-4ecf-b0a1-cd30ee72add3)
+![no image](Monthly sales revenue for the current year.PNG)
+![Alt text](Total spending per customer.png)
 
 - **Product Performance:** Best-selling products, low stock alerts.
 - **Supplier Analysis:** Revenue per supplier.
