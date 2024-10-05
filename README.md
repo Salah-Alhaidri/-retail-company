@@ -27,15 +27,12 @@ SELECT c.customer_id, CONCAT(c.first_name, ' ', c.last_name) AS customer_name, C
 FROM customers c JOIN orders o ON c.customer_id = o.customer_id
 GROUP BY c.customer_id, customer_name ORDER BY total_orders DESC;
 </h3> 
-![232](https://github.com/user-attachments/assets/e8177964-2e4b-407f-b324-2062053b179e)
-
 - **Sales Trends:** Monthly sales revenue.
 <h3>
   SELECT DATE_FORMAT(order_date, '%Y-%m') AS month,SUM(total_amount) AS monthly_sales
 FROM orders WHERE YEAR(order_date) = YEAR(CURDATE()) GROUP BY month ORDER BY month;
 </h3>
-![no image](Monthly sales revenue for the current year.PNG)
-![Alt text](Total spending per customer.png)
+![232](https://github.com/user-attachments/assets/9b2bbf05-4c0c-4413-ae1b-0c3d98629b58)
 
 - **Product Performance:** Best-selling products, low stock alerts.
 - **Supplier Analysis:** Revenue per supplier.
