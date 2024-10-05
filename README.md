@@ -18,6 +18,8 @@ The database consists of the following tables:
 - **orders:** Order information linked to customers.
 - **order_items:** Items within each order linked to products.
 
+## ERD diagram
+![ERD](https://github.com/user-attachments/assets/b81970da-1853-4350-8b82-2b00f152e753)
 
 ## Analytical Queries
 
@@ -27,16 +29,19 @@ SELECT c.customer_id, CONCAT(c.first_name, ' ', c.last_name) AS customer_name, C
 FROM customers c JOIN orders o ON c.customer_id = o.customer_id
 GROUP BY c.customer_id, customer_name ORDER BY total_orders DESC;
 </h3> 
- - **Sales Trends:** Monthly sales revenue and Top 5 months with highest sales.
+  
+  - **Sales Trends:** .
+ <p>Monthly sales revenue</p>
 <h3>
   SELECT DATE_FORMAT(order_date, '%Y-%m') AS month,SUM(total_amount) AS monthly_sales
 FROM orders WHERE YEAR(order_date) = YEAR(CURDATE()) GROUP BY month ORDER BY month;
 </h3>
+<p>  Top 5 months with highest sales.</p>
 <h3>
   SELECT DATE_FORMAT(order_date, '%Y-%m') AS month,SUM(total_amount) AS monthly_sales FROM orders GROUP BY month
 ORDER BY monthly_sales DESC LIMIT 5;</h3>
 
- - **Product Performance:** Best-selling products, low stock alerts.
+ - **Product Performance:** .
  <p>Top 10 best-selling products</p>
 <h3>SELECT 
     p.product_id, 
@@ -50,7 +55,7 @@ GROUP BY p.product_id, p.product_name
 ORDER BY total_units_sold DESC
 LIMIT 10;</h3>
 
- - **Supplier Analysis:** Revenue per supplier.
+ - **Supplier Analysis:** .
    <p>Number of products per supplier</p> 
 <h3>SELECT 
     s.supplier_id, 
@@ -61,7 +66,8 @@ JOIN products p ON s.supplier_id = p.supplier_id
 GROUP BY s.supplier_id, s.company_name
 ORDER BY total_products DESC;
 </h3>
- - **Inventory Analysis:** Current inventory status.
+
+- **Inventory Analysis:** .
    <p>Current inventory status</p>
 <h3>SELECT 
     product_id, 
