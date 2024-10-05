@@ -27,17 +27,63 @@ SELECT c.customer_id, CONCAT(c.first_name, ' ', c.last_name) AS customer_name, C
 FROM customers c JOIN orders o ON c.customer_id = o.customer_id
 GROUP BY c.customer_id, customer_name ORDER BY total_orders DESC;
 </h3> 
-- **Sales Trends:** Monthly sales revenue.
+ - **Sales Trends:** Monthly sales revenue and Top 5 months with highest sales.
 <h3>
   SELECT DATE_FORMAT(order_date, '%Y-%m') AS month,SUM(total_amount) AS monthly_sales
 FROM orders WHERE YEAR(order_date) = YEAR(CURDATE()) GROUP BY month ORDER BY month;
 </h3>
-![232](https://github.com/user-attachments/assets/9b2bbf05-4c0c-4413-ae1b-0c3d98629b58)
+<h3>
+  SELECT DATE_FORMAT(order_date, '%Y-%m') AS month,SUM(total_amount) AS monthly_sales FROM orders GROUP BY month
+ORDER BY monthly_sales DESC LIMIT 5;</h3>
 
-- **Product Performance:** Best-selling products, low stock alerts.
-- **Supplier Analysis:** Revenue per supplier.
-- **Inventory Analysis:** Current inventory status.
+ - **Product Performance:** Best-selling products, low stock alerts.
+ <p>Top 10 best-selling products</p>
+<h3>SELECT 
+    p.product_id, 
+    p.product_name, 
+    SUM(oi.quantity) AS total_units_sold,
+    SUM(oi.quantity * oi.unit_price * (1 - oi.discount)) AS total_revenue
+FROM products p
+JOIN order_items oi ON p.product_id = oi.product_id
+JOIN orders o ON oi.order_id = o.order_id
+GROUP BY p.product_id, p.product_name
+ORDER BY total_units_sold DESC
+LIMIT 10;</h3>
 
+ - **Supplier Analysis:** Revenue per supplier.
+   <p>Number of products per supplier</p> 
+<h3>SELECT 
+    s.supplier_id, 
+    s.company_name, 
+    COUNT(p.product_id) AS total_products
+FROM suppliers s
+JOIN products p ON s.supplier_id = p.supplier_id
+GROUP BY s.supplier_id, s.company_name
+ORDER BY total_products DESC;
+</h3>
+ - **Inventory Analysis:** Current inventory status.
+   <p>Current inventory status</p>
+<h3>SELECT 
+    product_id, 
+    product_name, 
+    units_in_stock, 
+    units_on_order, 
+    (units_in_stock + units_on_order) AS total_available
+FROM products
+ORDER BY total_available ASC;</h3>
+<p>Products with highest demand but low stock</p>
+<h3>SELECT 
+    p.product_id, 
+    p.product_name, 
+    SUM(oi.quantity) AS total_units_sold,
+    p.units_in_stock,
+    p.reorder_level
+FROM products p
+JOIN order_items oi ON p.product_id = oi.product_id
+JOIN orders o ON oi.order_id = o.order_id
+GROUP BY p.product_id, p.product_name, p.units_in_stock, p.reorder_level
+ORDER BY total_units_sold DESC;
+</h3>
  
 
  
